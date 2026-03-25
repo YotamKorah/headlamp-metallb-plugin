@@ -1,5 +1,9 @@
 # headlamp-metallb-plugin
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/headlamp-metallb-plugin)](https://artifacthub.io/packages/search?repo=headlamp-metallb-plugin)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/YotamKorah/headlamp-metallb-plugin?style=flat)](https://github.com/YotamKorah/headlamp-metallb-plugin)
+
 This repository contains a [Headlamp](https://github.com/kubernetes-sigs/headlamp) plugin for managing [MetalLB](https://github.com/metallb/metallb) resources.
 
 The plugin currently focuses on **MetalLB IPAddressPool** resources and adds dedicated list and details pages inside Headlamp.
