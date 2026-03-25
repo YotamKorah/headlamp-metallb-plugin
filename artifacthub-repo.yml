@@ -1,0 +1,6 @@
+# Artifact Hub repository metadata
+# https://artifacthub.io/docs/topics/repositories/#repository-metadata-file
+repositoryID: ""  # Fill in after registering on ArtifactHub
+owners:
+  - name: YotamKorah
+    email: ""  # Fill in your email

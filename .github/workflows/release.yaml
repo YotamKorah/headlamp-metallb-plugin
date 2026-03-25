@@ -1,0 +1,137 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Validate version format
+        run: |
+          if [[ ! "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Version must be in X.Y.Z format"
+            exit 1
+          fi
+
+      - name: Check if tag already exists
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/repos/${{ github.repository }}/git/refs/tags/v${{ inputs.version }}")
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "::error::Tag v${{ inputs.version }} already exists."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update version in package.json
+        run: npm version ${{ inputs.version }} --no-git-tag-version --allow-same-version
+
+      - name: Update artifacthub-pkg.yml
+        run: |
+          VERSION="${{ inputs.version }}"
+          PKG_NAME=$(jq -r .name package.json)
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${PKG_NAME}-${VERSION}.tar.gz"
+          sed -i "s/^version:.*/version: \"${VERSION}\"/" artifacthub-pkg.yml
+          sed -i "s|headlamp/plugin/archive-url:.*|headlamp/plugin/archive-url: \"${RELEASE_URL}\"|" artifacthub-pkg.yml
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npx @kinvolk/headlamp-plugin build
+
+      - name: Package plugin
+        run: npx @kinvolk/headlamp-plugin package
+
+      - name: Prepare release tarball
+        run: |
+          VERSION="${{ inputs.version }}"
+          PKG_NAME=$(jq -r .name package.json)
+          TARBALL="${PKG_NAME}-${VERSION}.tar.gz"
+          for f in *.tar.gz; do
+            [ "$f" != "$TARBALL" ] && mv "$f" "$TARBALL" && break
+          done
+          if [ ! -f "$TARBALL" ]; then
+            echo "Error: Expected tarball $TARBALL not found"
+            ls -la *.tar.gz 2>/dev/null || echo "No .tar.gz files found"
+            exit 1
+          fi
+          echo "TARBALL=$TARBALL" >> $GITHUB_ENV
+
+      - name: Validate tarball
+        run: |
+          echo "Tarball: ${{ env.TARBALL }}"
+          ls -lh "${{ env.TARBALL }}"
+          tar -tzf "${{ env.TARBALL }}" | head -20
+          tar -tzf "${{ env.TARBALL }}" | grep -q "main.js" || { echo "Error: main.js not found in tarball"; exit 1; }
+
+      - name: Compute checksum
+        run: |
+          CHECKSUM=$(sha256sum "${{ env.TARBALL }}" | awk '{print $1}')
+          echo "CHECKSUM=$CHECKSUM" >> $GITHUB_ENV
+          sed -i "s|headlamp/plugin/archive-checksum:.*|headlamp/plugin/archive-checksum: sha256:${CHECKSUM}|" artifacthub-pkg.yml
+
+      - name: Commit and tag
+        run: |
+          VERSION="${{ inputs.version }}"
+          BRANCH="release/v${VERSION}"
+          if git ls-remote --exit-code origin "refs/heads/$BRANCH" 2>/dev/null; then
+            echo "::notice::Branch $BRANCH already exists — deleting for clean re-trigger."
+            git push origin --delete "$BRANCH"
+          fi
+          git checkout -b "$BRANCH"
+          git add package.json package-lock.json artifacthub-pkg.yml
+          git commit -m "release: v${VERSION}"
+          git tag "v${VERSION}"
+          git push origin "$BRANCH"
+          git push origin "refs/tags/v${VERSION}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ inputs.version }}"
+          files: ${{ env.TARBALL }}
+          generate_release_notes: true
+
+      - name: Create PR for version bump
+        run: |
+          VERSION="${{ inputs.version }}"
+          gh pr create \
+            --title "release: v${VERSION}" \
+            --body "Automated version bump and checksum update for v${VERSION}." \
+            --base main \
+            --head "release/v${VERSION}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
