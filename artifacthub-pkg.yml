@@ -1,0 +1,24 @@
+# Artifact Hub package metadata
+# https://artifacthub.io/docs/topics/repositories/headlamp-plugins/
+version: "0.1.1"
+name: headlamp-metallb-plugin
+displayName: MetalLB
+createdAt: "2026-03-25T00:00:00Z"
+description: Headlamp plugin for managing MetalLB resources
+license: Apache-2.0
+homeURL: https://github.com/YotamKorah/headlamp-metallb-plugin
+appVersion: ""
+keywords:
+  - headlamp
+  - kubernetes
+  - metallb
+  - networking
+  - load-balancer
+annotations:
+  headlamp/plugin/archive-url: "https://github.com/YotamKorah/headlamp-metallb-plugin/releases/download/v0.1.1/headlamp-metallb-plugin-0.1.1.tar.gz"
+  headlamp/plugin/archive-checksum: "sha256:REPLACE_WITH_ACTUAL_CHECKSUM"  # Updated automatically by the release workflow
+  headlamp/plugin/version-compat: ">=0.13.0"
+  headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
+links:
+  - name: Source Code
+    url: https://github.com/YotamKorah/headlamp-metallb-plugin
