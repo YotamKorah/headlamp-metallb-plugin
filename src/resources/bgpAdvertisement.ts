@@ -30,5 +30,3 @@ export class BGPAdvertisement extends KubeObject<MetallbBGPAdvertisement> {
     return this.jsonData.spec;
   }
 }
-
-

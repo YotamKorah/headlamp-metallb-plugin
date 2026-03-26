@@ -1,7 +1,15 @@
 import { ResourceListView } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { L2Advertisement } from '../../resources/l2Advertisement';
+import { NotInstalledBanner } from '../common/CommonComponents';
 
 export function L2AdvertisementsList() {
+  const { isInstalled, isMetallbCheckLoading } = useMetallbInstalled();
+
+  if (!isInstalled) {
+    return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
+
   return (
     <ResourceListView
       title="L2Advertisements"
@@ -26,4 +34,3 @@ export function L2AdvertisementsList() {
     />
   );
 }
-

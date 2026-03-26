@@ -39,4 +39,3 @@ export function buildIPAddressPoolPatch(
     spec: edited.spec,
   };
 }
-

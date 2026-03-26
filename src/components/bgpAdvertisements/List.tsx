@@ -1,7 +1,15 @@
 import { ResourceListView } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { BGPAdvertisement } from '../../resources/bgpAdvertisement';
+import { NotInstalledBanner } from '../common/CommonComponents';
 
 export function BGPAdvertisementsList() {
+  const { isInstalled, isMetallbCheckLoading } = useMetallbInstalled();
+
+  if (!isInstalled) {
+    return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
+
   return (
     <ResourceListView
       title="BGPAdvertisements"
@@ -31,4 +39,3 @@ export function BGPAdvertisementsList() {
     />
   );
 }
-

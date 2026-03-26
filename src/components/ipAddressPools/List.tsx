@@ -1,7 +1,15 @@
 import { ResourceListView } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { IPAddressPool } from '../../resources/ipAddressPool';
+import { NotInstalledBanner } from '../common/CommonComponents';
 
 export function IPAddressPoolsList() {
+  const { isInstalled, isMetallbCheckLoading } = useMetallbInstalled();
+
+  if (!isInstalled) {
+    return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
+
   return (
     <ResourceListView
       title="IPAddressPools"

@@ -26,5 +26,3 @@ export class L2Advertisement extends KubeObject<MetallbL2Advertisement> {
     return this.jsonData.spec;
   }
 }
-
-

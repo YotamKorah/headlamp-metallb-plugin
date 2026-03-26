@@ -39,4 +39,3 @@ export function buildL2AdvertisementPatch(
     spec: edited.spec,
   };
 }
-

@@ -53,4 +53,3 @@ describe('l2Advertisement utils', () => {
     );
   });
 });
-
