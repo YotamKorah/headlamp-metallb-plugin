@@ -25,7 +25,7 @@ export function NotInstalledBanner({ isLoading = false }: NotInstalledBannerProp
           <Typography>
             Learn how to{' '}
             <MuiLink
-              href="https://metallb.universe.tf/installation/"
+              href="https://metallb.io/installation/"
               target="_blank"
               rel="noopener noreferrer"
             >

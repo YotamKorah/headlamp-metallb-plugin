@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { isMetallbInstalled } from '../isMetallbInstalled';
+import { isMetallbInstalled } from '../utils/isMetallbInstalled';
 
 export function useMetallbInstalled() {
   const [isInstalled, setIsInstalled] = useState<boolean | null>(null);
