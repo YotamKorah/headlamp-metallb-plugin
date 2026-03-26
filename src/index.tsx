@@ -15,8 +15,12 @@
  */
 
 import { registerRoute, registerSidebarEntry } from '@kinvolk/headlamp-plugin/lib';
+import { BGPAdvertisementDetail } from './components/bgpAdvertisements/Detail';
+import { BGPAdvertisementsList } from './components/bgpAdvertisements/List';
 import { IPAddressPoolDetail } from './components/ipAddressPools/Detail';
 import { IPAddressPoolsList } from './components/ipAddressPools/List';
+import { L2AdvertisementDetail } from './components/l2Advertisements/Detail';
+import { L2AdvertisementsList } from './components/l2Advertisements/List';
 
 // Below are some imports you may want to use.
 //   See README.md for links to plugin development documentation.
@@ -40,6 +44,20 @@ registerSidebarEntry({
   url: '/metallb/ipaddresspools',
 });
 
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-l2advertisements',
+  label: 'L2Advertisements',
+  url: '/metallb/l2advertisements',
+});
+
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-bgpadvertisements',
+  label: 'BGPAdvertisements',
+  url: '/metallb/bgpadvertisements',
+});
+
 registerRoute({
   path: '/metallb/ipaddresspools',
   sidebar: 'metallb-ipaddresspools',
@@ -53,6 +71,36 @@ registerRoute({
   sidebar: 'metallb-ipaddresspools',
   name: 'IPAddressPool',
   component: () => <IPAddressPoolDetail />,
+});
+
+registerRoute({
+  path: '/metallb/l2advertisements',
+  sidebar: 'metallb-l2advertisements',
+  name: 'L2Advertisements',
+  exact: true,
+  component: () => <L2AdvertisementsList />,
+});
+
+registerRoute({
+  path: '/metallb/l2advertisements/:namespace/:name',
+  sidebar: 'metallb-l2advertisements',
+  name: 'L2Advertisement',
+  component: () => <L2AdvertisementDetail />,
+});
+
+registerRoute({
+  path: '/metallb/bgpadvertisements',
+  sidebar: 'metallb-bgpadvertisements',
+  name: 'BGPAdvertisements',
+  exact: true,
+  component: () => <BGPAdvertisementsList />,
+});
+
+registerRoute({
+  path: '/metallb/bgpadvertisements/:namespace/:name',
+  sidebar: 'metallb-bgpadvertisements',
+  name: 'BGPAdvertisement',
+  component: () => <BGPAdvertisementDetail />,
 });
 
 // Example of using i18n (internationalization):

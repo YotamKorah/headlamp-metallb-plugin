@@ -6,30 +6,33 @@
 
 This repository contains a [Headlamp](https://github.com/kubernetes-sigs/headlamp) plugin for managing [MetalLB](https://github.com/metallb/metallb) resources.
 
-The plugin currently focuses on **MetalLB IPAddressPool** resources and adds dedicated list and details pages inside Headlamp.
+The plugin currently supports key MetalLB resources and adds dedicated list and details pages inside Headlamp.
 
 ## What the plugin provides
 
 - A dedicated **MetalLB** sidebar section.
-- A table view for `IPAddressPool` resources with custom columns:
-  - addresses
-  - auto-assign status
-- A details page for each `IPAddressPool` showing key spec and status fields.
-- YAML-based create flow (`Create IPAddressPool`).
-- YAML patch editing for existing pools, with validation that prevents changing `metadata.name` and `metadata.namespace` during edits.
+- A table view for `IPAddressPool`, `L2Advertisement`, and `BGPAdvertisement` resources with resource-specific columns.
+- A details page for each supported resource showing key spec fields (and status fields where available).
+- YAML helpers and patch builders for supported resources, with validation that prevents changing `metadata.name` and `metadata.namespace` during edits.
 
 ## Supported MetalLB resources
 
-At the moment, this plugin supports:
+This plugin supports:
 
 - `IPAddressPool` (`metallb.io/v1beta1`, namespaced)
+- `L2Advertisement` (`metallb.io/v1beta1`, namespaced)
+- `BGPAdvertisement` (`metallb.io/v1beta1`, namespaced)
 
 Other MetalLB resources can be added later following the same pattern used in `src/resources/` and `src/components/`.
 
 ## Routes and navigation
 
-- List route: `/metallb/ipaddresspools`
-- Details route: `/metallb/ipaddresspools/:namespace/:name`
+- `IPAddressPool` list route: `/metallb/ipaddresspools`
+- `IPAddressPool` details route: `/metallb/ipaddresspools/:namespace/:name`
+- `L2Advertisement` list route: `/metallb/l2advertisements`
+- `L2Advertisement` details route: `/metallb/l2advertisements/:namespace/:name`
+- `BGPAdvertisement` list route: `/metallb/bgpadvertisements`
+- `BGPAdvertisement` details route: `/metallb/bgpadvertisements/:namespace/:name`
 
 ## Development
 
@@ -67,11 +70,20 @@ Typical local workflow:
 
 - `src/index.tsx` - plugin registration (sidebar entries and routes)
 - `src/resources/ipAddressPool.ts` - `IPAddressPool` resource class and types
+- `src/resources/l2Advertisement.ts` - `L2Advertisement` resource class and types
+- `src/resources/bgpAdvertisement.ts` - `BGPAdvertisement` resource class and types
 - `src/components/ipAddressPools/List.tsx` - list view
 - `src/components/ipAddressPools/Detail.tsx` - details view
-- `src/components/ipAddressPools/YamlEditor.tsx` - create/edit YAML dialog
+- `src/components/l2Advertisements/List.tsx` - list view
+- `src/components/l2Advertisements/Detail.tsx` - details view
+- `src/components/bgpAdvertisements/List.tsx` - list view
+- `src/components/bgpAdvertisements/Detail.tsx` - details view
 - `src/utils/ipAddressPool.ts` - YAML template and patch building helpers
 - `src/utils/ipAddressPool.test.ts` - tests for utility logic
+- `src/utils/l2Advertisement.ts` - YAML template and patch building helpers
+- `src/utils/l2Advertisement.test.ts` - tests for utility logic
+- `src/utils/bgpAdvertisement.ts` - YAML template and patch building helpers
+- `src/utils/bgpAdvertisement.test.ts` - tests for utility logic
 
 ## Contributing
 
