@@ -11,7 +11,7 @@ The following npm scripts are available for development and testing:
 - **`npm run lint-fix`** - Automatically fix linting issues
 - **`npm run build`** - Build the plugin for production
 - **`npm run tsc`** - Type check code with TypeScript compiler
-- **`npm run test`** - Run tests with vitest
+- **`CI=1 npm run test`** - Run tests with vitest
 - **`npm start`** - Start development server watching for changes
 - **`npm run storybook`** - Start Storybook for component development
 - **`npm run storybook-build`** - Build static Storybook
