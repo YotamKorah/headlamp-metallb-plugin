@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 The Kubernetes Authors
+ * Copyright 2026 The Kubernetes Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,6 @@ import { IPAddressPoolDetail } from './components/ipAddressPools/Detail';
 import { IPAddressPoolsList } from './components/ipAddressPools/List';
 import { L2AdvertisementDetail } from './components/l2Advertisements/Detail';
 import { L2AdvertisementsList } from './components/l2Advertisements/List';
-
-// Below are some imports you may want to use.
-//   See README.md for links to plugin development documentation.
-// import { Headlamp, K8s, useTranslation } from '@kinvolk/headlamp-plugin/lib';
-// import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-// import { K8s } from '@kinvolk/headlamp-plugin/lib/K8s';
-// import { Typography } from '@mui/material';
 
 registerSidebarEntry({
   parent: '',
@@ -102,9 +95,3 @@ registerRoute({
   name: 'BGPAdvertisement',
   component: () => <BGPAdvertisementDetail />,
 });
-
-// Example of using i18n (internationalization):
-// function MyComponent() {
-//   const { t } = useTranslation();
-//   return <div>{t('translation_key')}</div>;
-// }
