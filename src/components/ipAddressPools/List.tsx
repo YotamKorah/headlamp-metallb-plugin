@@ -1,12 +1,7 @@
 import { ResourceListView } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import Button from '@mui/material/Button';
-import { useState } from 'react';
 import { IPAddressPool } from '../../resources/ipAddressPool';
-import { IPAddressPoolYamlEditor } from './YamlEditor';
 
 export function IPAddressPoolsList() {
-  const [createOpen, setCreateOpen] = useState(false);
-
   return (
     <>
       <ResourceListView
@@ -28,18 +23,6 @@ export function IPAddressPoolsList() {
           },
           'age',
         ]}
-        headerProps={{
-          titleSideActions: [
-            <Button key="create-ipaddresspool" variant="contained" onClick={() => setCreateOpen(true)}>
-              Create IPAddressPool
-            </Button>,
-          ],
-        }}
-      />
-      <IPAddressPoolYamlEditor
-        open={createOpen}
-        onClose={() => setCreateOpen(false)}
-        item={null}
       />
     </>
   );

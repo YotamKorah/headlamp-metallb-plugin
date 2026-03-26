@@ -3,15 +3,12 @@ import {
   NameValueTable,
   SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IPAddressPool } from '../../resources/ipAddressPool';
-import { IPAddressPoolYamlEditor } from './YamlEditor';
 
 export function IPAddressPoolDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
-  const [item, error] = IPAddressPool.useGet(name, namespace);
-  const [editOpen, setEditOpen] = useState(false);
+  const [, error] = IPAddressPool.useGet(name, namespace);
 
   return (
     <DetailsGrid
@@ -86,13 +83,7 @@ export function IPAddressPoolDetail() {
             ]
           : []
       }
-    >
-      <IPAddressPoolYamlEditor
-        open={editOpen}
-        item={item}
-        onClose={() => setEditOpen(false)}
-      />
-    </DetailsGrid>
+    />
   );
 }
 
