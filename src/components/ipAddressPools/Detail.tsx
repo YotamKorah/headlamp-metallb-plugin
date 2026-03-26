@@ -4,11 +4,18 @@ import {
   SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
+import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { IPAddressPool } from '../../resources/ipAddressPool';
+import { NotInstalledBanner } from '../common/CommonComponents';
 
 export function IPAddressPoolDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
   const [, error] = IPAddressPool.useGet(name, namespace);
+  const { isInstalled, isMetallbCheckLoading } = useMetallbInstalled();
+
+  if (!isInstalled) {
+    return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
 
   return (
     <DetailsGrid
@@ -61,31 +68,32 @@ export function IPAddressPoolDetail() {
                   </SectionBox>
                 ),
               },
-            {
-              id: 'ipaddresspool-status',
-              section: (
-                <SectionBox title="Status">
-                  <NameValueTable
-                    rows={[
-                      {
-                        name: 'IPv4 Addresses',
-                        value: `${resource.status.assignedIPv4} Assigned / ${resource.status.availableIPv4} Available` || '-',
-                      },
-                      {
-                        name: "IPv6 Addresses",
-                        value: `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` || '-',
-                      }
-                    ]}
-                  />
-                </SectionBox>
-              ),
-            },
+              {
+                id: 'ipaddresspool-status',
+                section: (
+                  <SectionBox title="Status">
+                    <NameValueTable
+                      rows={[
+                        {
+                          name: 'IPv4 Addresses',
+                          value:
+                            `${resource.status.assignedIPv4} Assigned / ${resource.status.availableIPv4} Available` ||
+                            '-',
+                        },
+                        {
+                          name: 'IPv6 Addresses',
+                          value:
+                            `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` ||
+                            '-',
+                        },
+                      ]}
+                    />
+                  </SectionBox>
+                ),
+              },
             ]
           : []
       }
     />
   );
 }
-
-
-

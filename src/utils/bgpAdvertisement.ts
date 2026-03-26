@@ -39,4 +39,3 @@ export function buildBGPAdvertisementPatch(
     spec: edited.spec,
   };
 }
-

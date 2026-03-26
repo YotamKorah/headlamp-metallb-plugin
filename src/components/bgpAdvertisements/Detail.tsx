@@ -4,7 +4,9 @@ import {
   SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
+import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { BGPAdvertisement } from '../../resources/bgpAdvertisement';
+import { NotInstalledBanner } from '../common/CommonComponents';
 
 function formatSelectors(selectors?: Record<string, any>[]) {
   if (!selectors?.length) {
@@ -17,6 +19,11 @@ function formatSelectors(selectors?: Record<string, any>[]) {
 export function BGPAdvertisementDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
   const [, error] = BGPAdvertisement.useGet(name, namespace);
+  const { isInstalled, isMetallbCheckLoading } = useMetallbInstalled();
+
+  if (!isInstalled) {
+    return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
 
   return (
     <DetailsGrid
@@ -95,4 +102,3 @@ export function BGPAdvertisementDetail() {
     />
   );
 }
-

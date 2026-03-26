@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  buildBGPAdvertisementPatch,
-  getBGPAdvertisementTemplateYAML,
-} from './bgpAdvertisement';
+import { buildBGPAdvertisementPatch, getBGPAdvertisementTemplateYAML } from './bgpAdvertisement';
 
 describe('bgpAdvertisement utils', () => {
   it('builds a template with metallb-system as default namespace', () => {
@@ -61,4 +58,3 @@ describe('bgpAdvertisement utils', () => {
     );
   });
 });
-
