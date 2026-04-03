@@ -1,6 +1,7 @@
 import {
   DetailsGrid,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { L2Advertisement } from '../../resources/l2Advertisement';
@@ -13,6 +14,16 @@ export function L2AdvertisementDetail() {
 
   if (!isInstalled) {
     return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" p={2} minHeight="200px">
+        <Typography color="error">
+          Error getting L2Advertisement {name}: {error.message}
+        </Typography>
+      </Box>
+    );
   }
 
   return (
@@ -37,10 +48,6 @@ export function L2AdvertisementDetail() {
           {
             name: 'Node Selectors',
             value: <SelectorList selectors={resource.spec.nodeSelectors} />,
-          },
-          {
-            name: 'Error',
-            value: error?.message,
           },
         ]
       }

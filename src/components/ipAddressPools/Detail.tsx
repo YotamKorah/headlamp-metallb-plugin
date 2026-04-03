@@ -2,6 +2,7 @@ import {
   DetailsGrid, MetadataDictGrid,
   NameValueTable,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { IPAddressPool } from '../../resources/ipAddressPool';
@@ -14,6 +15,16 @@ export function IPAddressPoolDetail() {
 
   if (!isInstalled) {
     return <NotInstalledBanner isLoading={isMetallbCheckLoading} />;
+  }
+
+  if (error) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" p={2} minHeight="200px">
+        <Typography color="error">
+          Error getting IPAddressPool {name}: {error.message}
+        </Typography>
+      </Box>
+    );
   }
 
   return (
@@ -71,10 +82,6 @@ export function IPAddressPoolDetail() {
             value:
               `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` ||
               '-',
-          },
-          {
-            name: 'Error',
-            value: error?.message,
           },
         ]
       }
