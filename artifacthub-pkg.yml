@@ -1,6 +1,6 @@
 # Artifact Hub package metadata
 # https://artifacthub.io/docs/topics/repositories/headlamp-plugins/
-version: "0.2.1"
+version: "0.3.0"
 name: headlamp-metallb-plugin
 displayName: MetalLB
 createdAt: "2026-03-25T00:00:00Z"
@@ -15,8 +15,8 @@ keywords:
   - networking
   - load-balancer
 annotations:
-  headlamp/plugin/archive-url: "https://github.com/YotamKorah/headlamp-metallb-plugin/releases/download/v0.2.1/headlamp-metallb-plugin-0.2.1.tar.gz"
-  headlamp/plugin/archive-checksum: sha256:d1cce063dca733d05661bd38f313c9fc72988bb3adaed708238f454128f97274
+  headlamp/plugin/archive-url: "https://github.com/YotamKorah/headlamp-metallb-plugin/releases/download/v0.3.0/headlamp-metallb-plugin-0.3.0.tar.gz"
+  headlamp/plugin/archive-checksum: sha256:279b0a20d74f908ac86c079d00ee4ac5e229836e760f4f3e69ecada36f7357e0
   headlamp/plugin/version-compat: ">=0.13.0"
   headlamp/plugin/distro-compat: "desktop,in-cluster,web,docker-desktop"
 links:
