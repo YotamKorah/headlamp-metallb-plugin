@@ -1,12 +1,23 @@
+import { MetadataDictGrid, NameValueTable } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, CircularProgress, Divider, Grid, Link as MuiLink, Typography } from '@mui/material';
-import { serializeAsValidatedYAML, YAMLValue } from '../../utils/yaml';
 
 interface NotInstalledBannerProps {
   isLoading?: boolean;
 }
 
+interface MatchExpression {
+  key: string;
+  operator: string;
+  values?: string[];
+}
+
+interface LabelSelector {
+  matchLabels?: Record<string, string>;
+  matchExpressions?: MatchExpression[];
+}
+
 interface SelectorListProps {
-  selectors?: Array<Record<string, YAMLValue>>;
+  selectors?: LabelSelector[];
   emptyText?: string;
 }
 
@@ -19,35 +30,44 @@ export function SelectorList({ selectors, emptyText = '-' }: SelectorListProps) 
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {selectors.map((selector, index) => (
         <Box key={index}>
-          {(() => {
-            const { yaml, error } = serializeAsValidatedYAML(selector);
-
-            if (error) {
-              return (
-                <Box sx={{ pl: 2, py: 1 }}>
-                  <Typography color="error" variant="body2">
-                    Invalid YAML: {error}
-                  </Typography>
-                </Box>
-              );
-            }
-
-            return (
-              <Box
-                component="pre"
-                sx={{
-                  pl: 2,
-                  py: 1,
-                  m: 0,
-                  whiteSpace: 'pre-wrap',
-                  fontFamily: 'monospace',
-                }}
-              >
-                {yaml}
+          {selector.matchLabels && Object.keys(selector.matchLabels).length > 0 && (
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>
+                Match Labels
+              </Typography>
+              <MetadataDictGrid dict={selector.matchLabels} showKeys />
+            </Box>
+          )}
+          {selector.matchExpressions && selector.matchExpressions.length > 0 && (
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>
+                Match Expressions
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                {selector.matchExpressions.map((expr, exprIndex) => (
+                  <Box key={exprIndex}>
+                    <NameValueTable
+                      rows={[
+                        {
+                          name: 'Key',
+                          value: expr.key || '-',
+                        },
+                        {
+                          name: 'Operator',
+                          value: expr.operator || '-',
+                        },
+                        {
+                          name: 'Values',
+                          value: expr.values?.length ? expr.values.join(', ') : '-',
+                        },
+                      ]}
+                    />
+                  </Box>
+                ))}
               </Box>
-            );
-          })()}
-          {index < selectors.length - 1 ? <Divider /> : null}
+            </Box>
+          )}
+          {index < selectors.length - 1 ? <Divider sx={{ my: 2 }} /> : null}
         </Box>
       ))}
     </Box>
