@@ -1,6 +1,6 @@
 import {
   DetailsGrid, MetadataDictGrid,
-  NameValueTable,
+  NameValueTable, NameValueTableRow, SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -25,6 +25,65 @@ export function IPAddressPoolDetail() {
         </Typography>
       </Box>
     );
+  }
+
+
+  const getIPv4AddressAssignmentStatus = (resource: IPAddressPool): NameValueTableRow[] => {
+    const rows = [];
+    if (resource.status?.assignedIPv4 || resource.status?.availableIPv4) {
+      rows.push({
+        name: 'Total',
+        value: (resource.status?.assignedIPv4 || 0) + (resource.status?.availableIPv4 || 0),
+      })
+      rows.push({
+        name: 'Assigned',
+        value: resource.status.assignedIPv4 || 0,
+      })
+      rows.push({
+        name: "Available",
+        value: resource.status.availableIPv4 || 0,
+      })
+    }
+    return rows;
+  }
+  const getIPv6AddressAssignmentStatus = (resource: IPAddressPool): NameValueTableRow[] => {
+    const rows = [];
+    if (resource.status?.assignedIPv6 || resource.status?.availableIPv6) {
+      rows.push({
+        name: 'Total',
+        value: (resource.status?.assignedIPv6 || 0) + (resource.status?.availableIPv6 || 0),
+      })
+      rows.push({
+        name: 'Assigned',
+        value: resource.status.assignedIPv6 || 0,
+      })
+      rows.push({
+        name: "Available",
+        value: resource.status.availableIPv6 || 0,
+      })
+    }
+    return rows;
+  }
+
+  function getStatusRows(resource: IPAddressPool): NameValueTableRow[] {
+    const rows = [];
+    const ipv4 = getIPv4AddressAssignmentStatus(resource);
+    if (ipv4.length > 0) {
+      rows.push({
+        name: 'IPv4 Addresses',
+        value: <NameValueTable rows={ipv4}/>
+      });
+    }
+
+    const ipv6 = getIPv6AddressAssignmentStatus(resource);
+    if (ipv6.length > 0) {
+      rows.push({
+        name: 'IPv6 Addresses',
+        value: <NameValueTable rows={ipv6}/>
+      })
+    }
+
+    return rows;
   }
 
   return (
@@ -73,20 +132,24 @@ export function IPAddressPoolDetail() {
           }: {
             name: 'Service Allocation',
             value: '-'
-          },
-          {
-            name: 'IPv4 Addresses',
-            value:
-              `${resource.status.assignedIPv4} Assigned / ${resource.status.availableIPv4} Available` ||
-              '-',
-          },
-          {
-            name: 'IPv6 Addresses',
-            value:
-              `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` ||
-              '-',
-          },
+          }
         ]
+      }
+      extraSections={resource =>
+        resource && resource?.status
+          ? [
+            {
+              id: 'ipaddresspool-status',
+              section: (
+                <SectionBox title="Status">
+                  <NameValueTable
+                    rows={getStatusRows(resource)}
+                  />
+                </SectionBox>
+              ),
+            },
+          ]
+        : []
       }
     />
   );
