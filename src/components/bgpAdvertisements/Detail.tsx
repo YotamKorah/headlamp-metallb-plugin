@@ -6,15 +6,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { BGPAdvertisement } from '../../resources/bgpAdvertisement';
-import { NotInstalledBanner } from '../common/CommonComponents';
-
-function formatSelectors(selectors?: Record<string, any>[]) {
-  if (!selectors?.length) {
-    return '-';
-  }
-
-  return selectors.map(selector => JSON.stringify(selector)).join(', ');
-}
+import { NotInstalledBanner, SelectorList } from '../common/CommonComponents';
 
 export function BGPAdvertisementDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
@@ -65,7 +57,7 @@ export function BGPAdvertisementDetail() {
                         },
                         {
                           name: 'IPAddressPool Selectors',
-                          value: formatSelectors(resource.spec.ipAddressPoolSelectors),
+                          value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
                         },
                         {
                           name: 'Peers',
@@ -89,7 +81,7 @@ export function BGPAdvertisementDetail() {
                         },
                         {
                           name: 'Node Selectors',
-                          value: formatSelectors(resource.spec.nodeSelectors),
+                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
                         },
                       ]}
                     />

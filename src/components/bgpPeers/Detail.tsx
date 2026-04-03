@@ -6,14 +6,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { BGPPeer } from '../../resources/bgpPeer';
-import { NotInstalledBanner } from '../common/CommonComponents';
-
-function formatSelectors(selectors?: Record<string, any>[]) {
-  if (!selectors?.length) {
-    return '-';
-  }
-  return selectors.map(selector => JSON.stringify(selector)).join(', ');
-}
+import { NotInstalledBanner, SelectorList } from '../common/CommonComponents';
 
 export function BGPPeerDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
@@ -100,7 +93,7 @@ export function BGPPeerDetail() {
                         },
                         {
                           name: 'Node Selectors',
-                          value: formatSelectors(resource.spec.nodeSelectors),
+                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
                         },
                       ]}
                     />

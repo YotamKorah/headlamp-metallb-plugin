@@ -6,15 +6,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { L2Advertisement } from '../../resources/l2Advertisement';
-import { NotInstalledBanner } from '../common/CommonComponents';
-
-function formatSelectors(selectors?: Record<string, any>[]) {
-  if (!selectors?.length) {
-    return '-';
-  }
-
-  return selectors.map(selector => JSON.stringify(selector)).join(', ');
-}
+import { NotInstalledBanner, SelectorList } from '../common/CommonComponents';
 
 export function L2AdvertisementDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
@@ -42,7 +34,7 @@ export function L2AdvertisementDetail() {
           },
           {
             name: 'Node Selectors',
-            value: formatSelectors(resource.spec.nodeSelectors),
+            value: <SelectorList selectors={resource.spec.nodeSelectors} />,
           },
           {
             name: 'Error',
@@ -69,11 +61,11 @@ export function L2AdvertisementDetail() {
                         },
                         {
                           name: 'IPAddressPool Selectors',
-                          value: formatSelectors(resource.spec.ipAddressPoolSelectors),
+                          value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
                         },
                         {
                           name: 'Node Selectors',
-                          value: formatSelectors(resource.spec.nodeSelectors),
+                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
                         },
                       ]}
                     />
