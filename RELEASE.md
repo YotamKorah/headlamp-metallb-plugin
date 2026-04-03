@@ -28,8 +28,6 @@ npm run package
 
 ## Triggering the release
 
-1. Go to the "Actions" tab in the GitHub repository.
-2. Select the "Release" workflow from the left sidebar.
-3. Click the "Run workflow" button.
-4. In the "Run workflow" dialog, enter the release version (e.g., `0.3.0`) in the input field.
-5. Click the "Run workflow" button to start the release process.
+1. Push the version update to `main` (if not already done).
+2. Tag the commit with the release version (for example `git tag v0.3.0`).
+3. Push the tag to GitHub (for example `git push origin v0.3.0`).
