@@ -70,7 +70,10 @@ export function IPAddressPoolDetail() {
                 }
               ]}
             />
-          }: null,
+          }: {
+            name: 'Service Allocation',
+            value: '-'
+          },
           {
             name: 'IPv4 Addresses',
             value:
