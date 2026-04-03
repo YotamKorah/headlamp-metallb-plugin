@@ -64,9 +64,9 @@ jobs:
           ARCHIVE_URL="https://github.com/YotamKorah/headlamp-metallb-plugin/releases/download/v${VERSION}/${{ steps.checksum.outputs.tarball }}"
           CHECKSUM="sha256:${{ steps.checksum.outputs.checksum }}"
 
-          sed -i "s/^version: .*/version: ${VERSION}/" artifacthub-pkg.yml
-          sed -i "s/^createdAt: .*/createdAt: ${CURRENT_DATE}/" artifacthub-pkg.yml
-          sed -i "s|headlamp/plugin/archive-url: .*|headlamp/plugin/archive-url: ${ARCHIVE_URL}|" artifacthub-pkg.yml
+          sed -i "s/^version: .*/version: \"${VERSION}\"/" artifacthub-pkg.yml
+          sed -i "s/^createdAt: .*/createdAt: \"${CURRENT_DATE}\"/" artifacthub-pkg.yml
+          sed -i "s|headlamp/plugin/archive-url: .*|headlamp/plugin/archive-url: \"${ARCHIVE_URL}\"|" artifacthub-pkg.yml
           sed -i "s|headlamp/plugin/archive-checksum: .*|headlamp/plugin/archive-checksum: \"${CHECKSUM}\"|" artifacthub-pkg.yml
 
           echo "✅ artifacthub-pkg.yml updated"
