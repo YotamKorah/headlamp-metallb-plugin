@@ -1,7 +1,5 @@
 import {
   DetailsGrid,
-  NameValueTable,
-  SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
@@ -37,71 +35,42 @@ export function BGPPeerDetail() {
             value: resource.spec.myASN ?? '-',
           },
           {
+            name: 'Source Address',
+            value: resource.spec.sourceAddress || '-',
+          },
+          {
+            name: 'Port',
+            value: resource.spec.port ?? '-',
+          },
+          {
+            name: 'Hold Time',
+            value: resource.spec.holdTime || '-',
+          },
+          {
+            name: 'Keepalive Time',
+            value: resource.spec.keepaliveTime || '-',
+          },
+          {
+            name: 'EBGP Multi Hop',
+            value: resource.spec.ebgpMultiHop ? 'Yes' : 'No',
+          },
+          {
+            name: 'BFD Profile',
+            value: resource.spec.bfdProfile || '-',
+          },
+          {
+            name: 'VRF',
+            value: resource.spec.vrf || '-',
+          },
+          {
+            name: 'Node Selectors',
+            value: <SelectorList selectors={resource.spec.nodeSelectors} />,
+          },
+          {
             name: 'Error',
             value: error?.message,
           },
         ]
-      }
-      extraSections={resource =>
-        resource
-          ? [
-              {
-                id: 'bgppeer-spec',
-                section: (
-                  <SectionBox title="Specification">
-                    <NameValueTable
-                      rows={[
-                        {
-                          name: 'Peer Address',
-                          value: resource.spec.peerAddress || '-',
-                        },
-                        {
-                          name: 'Peer ASN',
-                          value: resource.spec.peerASN ?? '-',
-                        },
-                        {
-                          name: 'My ASN',
-                          value: resource.spec.myASN ?? '-',
-                        },
-                        {
-                          name: 'Source Address',
-                          value: resource.spec.sourceAddress || '-',
-                        },
-                        {
-                          name: 'Port',
-                          value: resource.spec.port ?? '-',
-                        },
-                        {
-                          name: 'Hold Time',
-                          value: resource.spec.holdTime || '-',
-                        },
-                        {
-                          name: 'Keepalive Time',
-                          value: resource.spec.keepaliveTime || '-',
-                        },
-                        {
-                          name: 'EBGP Multi Hop',
-                          value: resource.spec.ebgpMultiHop ? 'Yes' : 'No',
-                        },
-                        {
-                          name: 'BFD Profile',
-                          value: resource.spec.bfdProfile || '-',
-                        },
-                        {
-                          name: 'VRF',
-                          value: resource.spec.vrf || '-',
-                        },
-                        {
-                          name: 'Node Selectors',
-                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
-                        },
-                      ]}
-                    />
-                  </SectionBox>
-                ),
-              },
-            ]
-          : []
       }
     />
   );

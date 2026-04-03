@@ -1,7 +1,6 @@
 import {
   DetailsGrid, MetadataDictGrid,
   NameValueTable,
-  SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
@@ -62,62 +61,22 @@ export function IPAddressPoolDetail() {
             />
           }: null,
           {
+            name: 'IPv4 Addresses',
+            value:
+              `${resource.status.assignedIPv4} Assigned / ${resource.status.availableIPv4} Available` ||
+              '-',
+          },
+          {
+            name: 'IPv6 Addresses',
+            value:
+              `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` ||
+              '-',
+          },
+          {
             name: 'Error',
             value: error?.message,
           },
         ]
-      }
-      extraSections={resource =>
-        resource
-          ? [
-              {
-                id: 'ipaddresspool-spec',
-                section: (
-                  <SectionBox title="Specification">
-                    <NameValueTable
-                      rows={[
-                        {
-                          name: 'Addresses',
-                          value: (resource.spec.addresses || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'Auto Assign',
-                          value: resource.spec.autoAssign === false ? 'No' : 'Yes',
-                        },
-                        {
-                          name: 'Avoid Buggy IPs',
-                          value: resource.spec.avoidBuggyIPs ? 'Yes' : 'No',
-                        },
-                      ]}
-                    />
-                  </SectionBox>
-                ),
-              },
-              {
-                id: 'ipaddresspool-status',
-                section: (
-                  <SectionBox title="Status">
-                    <NameValueTable
-                      rows={[
-                        {
-                          name: 'IPv4 Addresses',
-                          value:
-                            `${resource.status.assignedIPv4} Assigned / ${resource.status.availableIPv4} Available` ||
-                            '-',
-                        },
-                        {
-                          name: 'IPv6 Addresses',
-                          value:
-                            `${resource.status.assignedIPv6} Assigned / ${resource.status.availableIPv6} Available` ||
-                            '-',
-                        },
-                      ]}
-                    />
-                  </SectionBox>
-                ),
-              },
-            ]
-          : []
       }
     />
   );

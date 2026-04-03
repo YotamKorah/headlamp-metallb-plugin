@@ -1,7 +1,5 @@
 import {
   DetailsGrid,
-  NameValueTable,
-  SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
@@ -33,6 +31,10 @@ export function L2AdvertisementDetail() {
             value: (resource.spec.interfaces || []).join(', ') || '-',
           },
           {
+            name: 'IPAddressPool Selectors',
+            value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
+          },
+          {
             name: 'Node Selectors',
             value: <SelectorList selectors={resource.spec.nodeSelectors} />,
           },
@@ -41,39 +43,6 @@ export function L2AdvertisementDetail() {
             value: error?.message,
           },
         ]
-      }
-      extraSections={resource =>
-        resource
-          ? [
-              {
-                id: 'l2advertisement-spec',
-                section: (
-                  <SectionBox title="Specification">
-                    <NameValueTable
-                      rows={[
-                        {
-                          name: 'IPAddressPools',
-                          value: (resource.spec.ipAddressPools || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'Interfaces',
-                          value: (resource.spec.interfaces || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'IPAddressPool Selectors',
-                          value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
-                        },
-                        {
-                          name: 'Node Selectors',
-                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
-                        },
-                      ]}
-                    />
-                  </SectionBox>
-                ),
-              },
-            ]
-          : []
       }
     />
   );

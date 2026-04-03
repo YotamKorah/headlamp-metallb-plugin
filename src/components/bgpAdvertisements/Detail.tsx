@@ -1,7 +1,5 @@
 import {
   DetailsGrid,
-  NameValueTable,
-  SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
@@ -29,67 +27,38 @@ export function BGPAdvertisementDetail() {
             value: (resource.spec.ipAddressPools || []).join(', ') || '-',
           },
           {
+            name: 'IPAddressPool Selectors',
+            value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
+          },
+          {
             name: 'Peers',
             value: (resource.spec.peers || []).join(', ') || '-',
+          },
+          {
+            name: 'Communities',
+            value: (resource.spec.communities || []).join(', ') || '-',
           },
           {
             name: 'Local Pref',
             value: resource.spec.localPref ?? '-',
           },
           {
+            name: 'Aggregation Length (IPv4)',
+            value: resource.spec.aggregationLength ?? '-',
+          },
+          {
+            name: 'Aggregation Length (IPv6)',
+            value: resource.spec.aggregationLengthV6 ?? '-',
+          },
+          {
+            name: 'Node Selectors',
+            value: <SelectorList selectors={resource.spec.nodeSelectors} />,
+          },
+          {
             name: 'Error',
             value: error?.message,
           },
         ]
-      }
-      extraSections={resource =>
-        resource
-          ? [
-              {
-                id: 'bgpadvertisement-spec',
-                section: (
-                  <SectionBox title="Specification">
-                    <NameValueTable
-                      rows={[
-                        {
-                          name: 'IPAddressPools',
-                          value: (resource.spec.ipAddressPools || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'IPAddressPool Selectors',
-                          value: <SelectorList selectors={resource.spec.ipAddressPoolSelectors} />,
-                        },
-                        {
-                          name: 'Peers',
-                          value: (resource.spec.peers || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'Communities',
-                          value: (resource.spec.communities || []).join(', ') || '-',
-                        },
-                        {
-                          name: 'Local Pref',
-                          value: resource.spec.localPref ?? '-',
-                        },
-                        {
-                          name: 'Aggregation Length (IPv4)',
-                          value: resource.spec.aggregationLength ?? '-',
-                        },
-                        {
-                          name: 'Aggregation Length (IPv6)',
-                          value: resource.spec.aggregationLengthV6 ?? '-',
-                        },
-                        {
-                          name: 'Node Selectors',
-                          value: <SelectorList selectors={resource.spec.nodeSelectors} />,
-                        },
-                      ]}
-                    />
-                  </SectionBox>
-                ),
-              },
-            ]
-          : []
       }
     />
   );
