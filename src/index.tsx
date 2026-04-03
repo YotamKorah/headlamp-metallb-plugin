@@ -17,6 +17,8 @@
 import { registerRoute, registerSidebarEntry } from '@kinvolk/headlamp-plugin/lib';
 import { BGPAdvertisementDetail } from './components/bgpAdvertisements/Detail';
 import { BGPAdvertisementsList } from './components/bgpAdvertisements/List';
+import { BGPPeerDetail } from './components/bgpPeers/Detail';
+import { BGPPeersList } from './components/bgpPeers/List';
 import { IPAddressPoolDetail } from './components/ipAddressPools/Detail';
 import { IPAddressPoolsList } from './components/ipAddressPools/List';
 import { L2AdvertisementDetail } from './components/l2Advertisements/Detail';
@@ -49,6 +51,13 @@ registerSidebarEntry({
   name: 'metallb-bgpadvertisements',
   label: 'BGPAdvertisements',
   url: '/metallb/bgpadvertisements',
+});
+
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-bgppeers',
+  label: 'BGPPeers',
+  url: '/metallb/bgppeers',
 });
 
 registerRoute({
@@ -95,3 +104,19 @@ registerRoute({
   name: 'BGPAdvertisement',
   component: () => <BGPAdvertisementDetail />,
 });
+
+registerRoute({
+  path: '/metallb/bgppeers',
+  sidebar: 'metallb-bgppeers',
+  name: 'BGPPeers',
+  exact: true,
+  component: () => <BGPPeersList />,
+});
+
+registerRoute({
+  path: '/metallb/bgppeers/:namespace/:name',
+  sidebar: 'metallb-bgppeers',
+  name: 'BGPPeer',
+  component: () => <BGPPeerDetail />,
+});
+

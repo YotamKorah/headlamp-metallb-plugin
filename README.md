@@ -13,6 +13,7 @@ The plugin currently supports key MetalLB resources and adds dedicated list and 
 
 - A dedicated **MetalLB** sidebar section.
 - A table view for `IPAddressPool`, `L2Advertisement`, and `BGPAdvertisement` resources with resource-specific columns.
+- A table view for `BGPPeer` resources with resource-specific columns.
 - A details page for each supported resource showing key spec fields (and status fields where available).
 - YAML helpers and patch builders for supported resources, with validation that prevents changing `metadata.name` and `metadata.namespace` during edits.
 
@@ -23,6 +24,7 @@ This plugin supports:
 - `IPAddressPool` (`metallb.io/v1beta1`, namespaced)
 - `L2Advertisement` (`metallb.io/v1beta1`, namespaced)
 - `BGPAdvertisement` (`metallb.io/v1beta1`, namespaced)
+- `BGPPeer` (`metallb.io/v1beta1`, namespaced)
 
 Other MetalLB resources can be added later following the same pattern used in `src/resources/` and `src/components/`.
 
@@ -34,6 +36,8 @@ Other MetalLB resources can be added later following the same pattern used in `s
 - `L2Advertisement` details route: `/metallb/l2advertisements/:namespace/:name`
 - `BGPAdvertisement` list route: `/metallb/bgpadvertisements`
 - `BGPAdvertisement` details route: `/metallb/bgpadvertisements/:namespace/:name`
+- `BGPPeer` list route: `/metallb/bgppeers`
+- `BGPPeer` details route: `/metallb/bgppeers/:namespace/:name`
 
 ## Development
 
@@ -73,18 +77,23 @@ Typical local workflow:
 - `src/resources/ipAddressPool.ts` - `IPAddressPool` resource class and types
 - `src/resources/l2Advertisement.ts` - `L2Advertisement` resource class and types
 - `src/resources/bgpAdvertisement.ts` - `BGPAdvertisement` resource class and types
+- `src/resources/bgpPeer.ts` - `BGPPeer` resource class and types
 - `src/components/ipAddressPools/List.tsx` - list view
 - `src/components/ipAddressPools/Detail.tsx` - details view
 - `src/components/l2Advertisements/List.tsx` - list view
 - `src/components/l2Advertisements/Detail.tsx` - details view
 - `src/components/bgpAdvertisements/List.tsx` - list view
 - `src/components/bgpAdvertisements/Detail.tsx` - details view
+- `src/components/bgpPeers/List.tsx` - list view
+- `src/components/bgpPeers/Detail.tsx` - details view
 - `src/utils/ipAddressPool.ts` - YAML template and patch building helpers
 - `src/utils/ipAddressPool.test.ts` - tests for utility logic
 - `src/utils/l2Advertisement.ts` - YAML template and patch building helpers
 - `src/utils/l2Advertisement.test.ts` - tests for utility logic
 - `src/utils/bgpAdvertisement.ts` - YAML template and patch building helpers
 - `src/utils/bgpAdvertisement.test.ts` - tests for utility logic
+- `src/utils/bgpPeer.ts` - YAML template and patch building helpers
+- `src/utils/bgpPeer.test.ts` - tests for utility logic
 
 ## Contributing
 
