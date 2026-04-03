@@ -1,12 +1,12 @@
 import {
-  DetailsGrid,
+  DetailsGrid, MetadataDictGrid,
   NameValueTable,
   SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { IPAddressPool } from '../../resources/ipAddressPool';
-import { NotInstalledBanner } from '../common/CommonComponents';
+import {NotInstalledBanner, SelectorList} from '../common/CommonComponents';
 
 export function IPAddressPoolDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
@@ -36,6 +36,31 @@ export function IPAddressPoolDetail() {
             name: 'Avoid Buggy IPs',
             value: resource.spec.avoidBuggyIPs ? 'Yes' : 'No',
           },
+          resource.spec.serviceAllocation ? {
+            name: "Service Allocation",
+            value: <NameValueTable
+              rows={[
+                {
+                  name: 'Priority',
+                  value: resource.spec.serviceAllocation.priority || '-',
+                },
+                {
+                  name: 'Namespaces',
+                  value: resource.spec.serviceAllocation.namespaces ?
+                    <MetadataDictGrid dict={resource.spec.serviceAllocation.namespaces as { [index: number]: string }} showKeys={false} /> :
+                    '-',
+                },
+                {
+                  name: 'Namespace Selectors',
+                  value: <SelectorList selectors={resource.spec.serviceAllocation.namespaceSelectors} />,
+                },
+                {
+                  name: 'Service Selectors',
+                  value: <SelectorList selectors={resource.spec.serviceAllocation.serviceSelectors} />,
+                }
+              ]}
+            />
+          }: null,
           {
             name: 'Error',
             value: error?.message,
