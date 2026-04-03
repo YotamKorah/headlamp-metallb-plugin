@@ -89,7 +89,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          git add artifacthub-pkg.yml
+          git add .
           git commit -m "chore: update artifacthub metadata for v${{ steps.version.outputs.version }}"
           git push origin "$BRANCH"
           gh pr create \
