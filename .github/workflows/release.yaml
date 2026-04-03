@@ -75,6 +75,12 @@ jobs:
           echo "   archive-url: ${ARCHIVE_URL}"
           echo "   archive-checksum: ${CHECKSUM}"
 
+      - name: Copy artifacthub-pkg.yml to release directory
+        run: |
+          mkdir -p release/${{ steps.version.outputs.version }}
+          cp artifacthub-pkg.yml release/${{ steps.version.outputs.version }}/
+          cp README.md release/${{ steps.version.outputs.version }}/
+
       - name: Commit artifacthub-pkg.yml
         env:
           GH_TOKEN: ${{ github.token }}
