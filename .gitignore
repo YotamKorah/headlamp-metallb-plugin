@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 *.tsbuildinfo
+headlamp-*.tgz
 
 # Environment variables
 .env
