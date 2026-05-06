@@ -1,6 +1,6 @@
 {
   "name": "headlamp-metallb-plugin",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "description": "Headlamp plugin for MetalLB",
   "scripts": {
     "start": "headlamp-plugin start",
