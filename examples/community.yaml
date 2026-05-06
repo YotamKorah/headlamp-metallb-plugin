@@ -1,0 +1,15 @@
+apiVersion: metallb.io/v1beta1
+kind: Community
+metadata:
+  name: example-community
+  namespace: metallb-system
+spec:
+  communities:
+    - name: no-advertise
+      value: "65535:65282"
+    - name: no-export
+      value: "65535:65281"
+    - name: local-as
+      value: "65535:65283"
+    - name: custom-community
+      value: "64512:100"

@@ -1,0 +1,31 @@
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: example-bgpadvertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - example-ipaddresspool
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: example-bgpadvertisement-full
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - example-ipaddresspool-with-allocation
+  ipAddressPoolSelectors:
+    - matchLabels:
+        environment: production
+  peers:
+    - example-bgppeer
+  communities:
+    - no-advertise
+    - local-as
+  localPref: 100
+  aggregationLength: 32
+  aggregationLengthV6: 128
+  nodeSelectors:
+    - matchLabels:
+        kubernetes.io/os: linux

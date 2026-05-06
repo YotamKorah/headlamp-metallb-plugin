@@ -1,0 +1,29 @@
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: example-l2advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - example-ipaddresspool
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: example-l2advertisement-with-selectors
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - example-ipaddresspool-with-allocation
+  interfaces:
+    - eth0
+    - eth1
+  ipAddressPoolSelectors:
+    - matchLabels:
+        environment: production
+  nodeSelectors:
+    - matchLabels:
+        kubernetes.io/os: linux
+      matchExpressions:
+        - key: node-role.kubernetes.io/worker
+          operator: Exists
