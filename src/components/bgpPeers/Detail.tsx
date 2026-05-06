@@ -50,10 +50,6 @@ export function BGPPeerDetail() {
             value: resource.spec.sourceAddress || '-',
           },
           {
-            name: 'Port',
-            value: resource.spec.port ?? '-',
-          },
-          {
             name: 'Hold Time',
             value: resource.spec.holdTime || '-',
           },
@@ -68,10 +64,6 @@ export function BGPPeerDetail() {
           {
             name: 'BFD Profile',
             value: resource.spec.bfdProfile || '-',
-          },
-          {
-            name: 'VRF',
-            value: resource.spec.vrf || '-',
           },
           {
             name: 'Node Selectors',

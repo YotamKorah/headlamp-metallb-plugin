@@ -19,7 +19,7 @@ export interface MetallbBGPAdvertisement extends KubeObjectInterface {
 export class BGPAdvertisement extends KubeObject<MetallbBGPAdvertisement> {
   static kind = 'BGPAdvertisement';
   static apiName = 'bgpadvertisements';
-  static apiVersion = 'metallb.io/v1beta1';
+  static apiVersion = ['metallb.io/v1beta1'];
   static isNamespaced = true;
 
   static get detailsRoute() {

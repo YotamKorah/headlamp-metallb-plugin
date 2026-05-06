@@ -28,7 +28,7 @@ export interface MetallbIPAddressPool extends KubeObjectInterface {
 export class IPAddressPool extends KubeObject<MetallbIPAddressPool> {
   static kind = 'IPAddressPool';
   static apiName = 'ipaddresspools';
-  static apiVersion = 'metallb.io/v1beta1';
+  static apiVersion = ['metallb.io/v1beta1'];
   static isNamespaced = true;
 
   // Keep links on the plugin page instead of the default generated route.

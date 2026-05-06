@@ -17,7 +17,7 @@ export interface MetallbCommunity extends KubeObjectInterface {
 export class Community extends KubeObject<MetallbCommunity> {
   static kind = 'Community';
   static apiName = 'communities';
-  static apiVersion = 'metallb.io/v1beta1';
+  static apiVersion = ['metallb.io/v1beta1'];
   static isNamespaced = true;
 
   static get detailsRoute() {

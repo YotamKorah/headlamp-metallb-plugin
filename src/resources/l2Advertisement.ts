@@ -15,7 +15,7 @@ export interface MetallbL2Advertisement extends KubeObjectInterface {
 export class L2Advertisement extends KubeObject<MetallbL2Advertisement> {
   static kind = 'L2Advertisement';
   static apiName = 'l2advertisements';
-  static apiVersion = 'metallb.io/v1beta1';
+  static apiVersion = ['metallb.io/v1beta1'];
   static isNamespaced = true;
 
   static get detailsRoute() {

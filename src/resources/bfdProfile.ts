@@ -18,7 +18,7 @@ export interface MetallbBFDProfile extends KubeObjectInterface {
 export class BFDProfile extends KubeObject<MetallbBFDProfile> {
   static kind = 'BFDProfile';
   static apiName = 'bfdprofiles';
-  static apiVersion = 'metallb.io/v1beta1';
+  static apiVersion = ['metallb.io/v1beta1'];
   static isNamespaced = true;
 
   static get detailsRoute() {
