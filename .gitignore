@@ -6,6 +6,7 @@ dist/
 build/
 *.tsbuildinfo
 headlamp-*.tgz
+headlamp-*.tar.gz
 
 # Environment variables
 .env
