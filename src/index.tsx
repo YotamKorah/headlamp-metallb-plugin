@@ -25,6 +25,7 @@ import { CommunityDetail } from './components/communities/Detail';
 import { CommunitiesList } from './components/communities/List';
 import { IPAddressPoolDetail } from './components/ipAddressPools/Detail';
 import { IPAddressPoolsList } from './components/ipAddressPools/List';
+import { IPAssignmentsList } from './components/ipAssignments/List';
 import { L2AdvertisementDetail } from './components/l2Advertisements/Detail';
 import { L2AdvertisementsList } from './components/l2Advertisements/List';
 
@@ -32,8 +33,15 @@ registerSidebarEntry({
   parent: '',
   name: 'metallb',
   label: 'MetalLB',
-  url: '/metallb/ipaddresspools',
+  url: '/metallb/ipassignments',
   icon: 'mdi:ip-network',
+});
+
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-ipassignments',
+  label: 'IP Assignments',
+  url: '/metallb/ipassignments',
 });
 
 registerSidebarEntry({
@@ -166,5 +174,13 @@ registerRoute({
   sidebar: 'metallb-communities',
   name: 'Community',
   component: () => <CommunityDetail />,
+});
+
+registerRoute({
+  path: '/metallb/ipassignments',
+  sidebar: 'metallb-ipassignments',
+  name: 'IPAssignments',
+  exact: true,
+  component: () => <IPAssignmentsList />,
 });
 
