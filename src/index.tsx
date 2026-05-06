@@ -15,10 +15,14 @@
  */
 
 import { registerRoute, registerSidebarEntry } from '@kinvolk/headlamp-plugin/lib';
+import { BFDProfileDetail } from './components/bfdProfiles/Detail';
+import { BFDProfilesList } from './components/bfdProfiles/List';
 import { BGPAdvertisementDetail } from './components/bgpAdvertisements/Detail';
 import { BGPAdvertisementsList } from './components/bgpAdvertisements/List';
 import { BGPPeerDetail } from './components/bgpPeers/Detail';
 import { BGPPeersList } from './components/bgpPeers/List';
+import { CommunityDetail } from './components/communities/Detail';
+import { CommunitiesList } from './components/communities/List';
 import { IPAddressPoolDetail } from './components/ipAddressPools/Detail';
 import { IPAddressPoolsList } from './components/ipAddressPools/List';
 import { L2AdvertisementDetail } from './components/l2Advertisements/Detail';
@@ -58,6 +62,20 @@ registerSidebarEntry({
   name: 'metallb-bgppeers',
   label: 'BGPPeers',
   url: '/metallb/bgppeers',
+});
+
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-bfdprofiles',
+  label: 'BFDProfiles',
+  url: '/metallb/bfdprofiles',
+});
+
+registerSidebarEntry({
+  parent: 'metallb',
+  name: 'metallb-communities',
+  label: 'Communities',
+  url: '/metallb/communities',
 });
 
 registerRoute({
@@ -118,5 +136,35 @@ registerRoute({
   sidebar: 'metallb-bgppeers',
   name: 'BGPPeer',
   component: () => <BGPPeerDetail />,
+});
+
+registerRoute({
+  path: '/metallb/bfdprofiles',
+  sidebar: 'metallb-bfdprofiles',
+  name: 'BFDProfiles',
+  exact: true,
+  component: () => <BFDProfilesList />,
+});
+
+registerRoute({
+  path: '/metallb/bfdprofiles/:namespace/:name',
+  sidebar: 'metallb-bfdprofiles',
+  name: 'BFDProfile',
+  component: () => <BFDProfileDetail />,
+});
+
+registerRoute({
+  path: '/metallb/communities',
+  sidebar: 'metallb-communities',
+  name: 'Communities',
+  exact: true,
+  component: () => <CommunitiesList />,
+});
+
+registerRoute({
+  path: '/metallb/communities/:namespace/:name',
+  sidebar: 'metallb-communities',
+  name: 'Community',
+  component: () => <CommunityDetail />,
 });
 
