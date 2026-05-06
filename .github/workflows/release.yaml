@@ -33,7 +33,7 @@ jobs:
           echo "📦 Release version: $VERSION"
 
       - name: Update version in package.json
-        run: npm version ${{ inputs.version }} --no-git-tag-version --allow-same-version
+        run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version --allow-same-version
 
       - name: Install dependencies
         run: npm ci
