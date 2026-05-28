@@ -34,7 +34,3 @@ describe('yaml utils', () => {
     expect(error).toBeDefined();
   });
 });
-
-
-
-

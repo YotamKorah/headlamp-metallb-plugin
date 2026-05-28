@@ -13,6 +13,7 @@
     "storybook": "headlamp-plugin storybook",
     "storybook-build": "headlamp-plugin storybook-build",
     "test": "headlamp-plugin test",
+    "test:ci": "CI=true headlamp-plugin test",
     "i18n": "headlamp-plugin i18n"
   },
   "keywords": [
@@ -32,9 +33,9 @@
     ]
   },
   "overrides": {
-    "typescript": "5.9.3"
+    "typescript": "5.6.2"
   },
   "devDependencies": {
-    "@kinvolk/headlamp-plugin": "^0.13.1"
+    "@kinvolk/headlamp-plugin": "^0.14.0"
   }
 }
