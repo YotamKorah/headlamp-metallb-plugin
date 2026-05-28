@@ -183,4 +183,3 @@ registerRoute({
   exact: true,
   component: () => <IPAssignmentsList />,
 });
-

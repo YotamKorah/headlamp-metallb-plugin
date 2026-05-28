@@ -1,6 +1,4 @@
-import {
-  DetailsGrid,
-} from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { DetailsGrid } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';

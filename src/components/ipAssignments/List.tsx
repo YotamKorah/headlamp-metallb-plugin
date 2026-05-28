@@ -15,10 +15,12 @@ export function IPAssignmentsList() {
           label: 'Assigned IP',
           getValue: service => {
             const ingress = service.status?.loadBalancer?.ingress ?? [];
-            return ingress
-              .map((i: { ip?: string; hostname?: string }) => i.ip ?? i.hostname)
-              .filter(Boolean)
-              .join(', ') || '-';
+            return (
+              ingress
+                .map((i: { ip?: string; hostname?: string }) => i.ip ?? i.hostname)
+                .filter(Boolean)
+                .join(', ') || '-'
+            );
           },
         },
         {

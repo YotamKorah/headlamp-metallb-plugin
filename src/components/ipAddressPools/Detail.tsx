@@ -1,12 +1,15 @@
 import {
-  DetailsGrid, MetadataDictGrid,
-  NameValueTable, NameValueTableRow, SectionBox,
+  DetailsGrid,
+  MetadataDictGrid,
+  NameValueTable,
+  NameValueTableRow,
+  SectionBox,
 } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useMetallbInstalled } from '../../hooks/useMetallbInstalled';
 import { IPAddressPool } from '../../resources/ipAddressPool';
-import {NotInstalledBanner, SelectorList} from '../common/CommonComponents';
+import { NotInstalledBanner, SelectorList } from '../common/CommonComponents';
 
 export function IPAddressPoolDetail() {
   const { name, namespace } = useParams<{ name: string; namespace: string }>();
@@ -27,43 +30,42 @@ export function IPAddressPoolDetail() {
     );
   }
 
-
   const getIPv4AddressAssignmentStatus = (resource: IPAddressPool): NameValueTableRow[] => {
     const rows = [];
     if (resource.status?.assignedIPv4 || resource.status?.availableIPv4) {
       rows.push({
         name: 'Total',
         value: (resource.status?.assignedIPv4 || 0) + (resource.status?.availableIPv4 || 0),
-      })
+      });
       rows.push({
         name: 'Assigned',
         value: resource.status.assignedIPv4 || 0,
-      })
+      });
       rows.push({
-        name: "Available",
+        name: 'Available',
         value: resource.status.availableIPv4 || 0,
-      })
+      });
     }
     return rows;
-  }
+  };
   const getIPv6AddressAssignmentStatus = (resource: IPAddressPool): NameValueTableRow[] => {
     const rows = [];
     if (resource.status?.assignedIPv6 || resource.status?.availableIPv6) {
       rows.push({
         name: 'Total',
         value: (resource.status?.assignedIPv6 || 0) + (resource.status?.availableIPv6 || 0),
-      })
+      });
       rows.push({
         name: 'Assigned',
         value: resource.status.assignedIPv6 || 0,
-      })
+      });
       rows.push({
-        name: "Available",
+        name: 'Available',
         value: resource.status.availableIPv6 || 0,
-      })
+      });
     }
     return rows;
-  }
+  };
 
   function getStatusRows(resource: IPAddressPool): NameValueTableRow[] {
     const rows = [];
@@ -71,7 +73,7 @@ export function IPAddressPoolDetail() {
     if (ipv4.length > 0) {
       rows.push({
         name: 'IPv4 Addresses',
-        value: <NameValueTable rows={ipv4}/>
+        value: <NameValueTable rows={ipv4} />,
       });
     }
 
@@ -79,8 +81,8 @@ export function IPAddressPoolDetail() {
     if (ipv6.length > 0) {
       rows.push({
         name: 'IPv6 Addresses',
-        value: <NameValueTable rows={ipv6}/>
-      })
+        value: <NameValueTable rows={ipv6} />,
+      });
     }
 
     return rows;
@@ -105,51 +107,70 @@ export function IPAddressPoolDetail() {
             name: 'Avoid Buggy IPs',
             value: resource.spec.avoidBuggyIPs ? 'Yes' : 'No',
           },
-          resource.spec.serviceAllocation ? {
-            name: "Service Allocation",
-            value: <NameValueTable
-              rows={[
-                {
-                  name: 'Priority',
-                  value: resource.spec.serviceAllocation.priority || '-',
-                },
-                {
-                  name: 'Namespaces',
-                  value: resource.spec.serviceAllocation.namespaces ?
-                    <MetadataDictGrid dict={resource.spec.serviceAllocation.namespaces as { [index: number]: string }} showKeys={false} /> :
-                    '-',
-                },
-                {
-                  name: 'Namespace Selectors',
-                  value: <SelectorList selectors={resource.spec.serviceAllocation.namespaceSelectors} />,
-                },
-                {
-                  name: 'Service Selectors',
-                  value: <SelectorList selectors={resource.spec.serviceAllocation.serviceSelectors} />,
-                }
-              ]}
-            />
-          }: {
-            name: 'Service Allocation',
-            value: '-'
-          }
+          resource.spec.serviceAllocation
+            ? {
+                name: 'Service Allocation',
+                value: (
+                  <NameValueTable
+                    rows={[
+                      {
+                        name: 'Priority',
+                        value: resource.spec.serviceAllocation.priority || '-',
+                      },
+                      {
+                        name: 'Namespaces',
+                        value: resource.spec.serviceAllocation.namespaces ? (
+                          <MetadataDictGrid
+                            dict={
+                              resource.spec.serviceAllocation.namespaces as {
+                                [index: number]: string;
+                              }
+                            }
+                            showKeys={false}
+                          />
+                        ) : (
+                          '-'
+                        ),
+                      },
+                      {
+                        name: 'Namespace Selectors',
+                        value: (
+                          <SelectorList
+                            selectors={resource.spec.serviceAllocation.namespaceSelectors}
+                          />
+                        ),
+                      },
+                      {
+                        name: 'Service Selectors',
+                        value: (
+                          <SelectorList
+                            selectors={resource.spec.serviceAllocation.serviceSelectors}
+                          />
+                        ),
+                      },
+                    ]}
+                  />
+                ),
+              }
+            : {
+                name: 'Service Allocation',
+                value: '-',
+              },
         ]
       }
       extraSections={resource =>
         resource && resource?.status
           ? [
-            {
-              id: 'ipaddresspool-status',
-              section: (
-                <SectionBox title="Status">
-                  <NameValueTable
-                    rows={getStatusRows(resource)}
-                  />
-                </SectionBox>
-              ),
-            },
-          ]
-        : []
+              {
+                id: 'ipaddresspool-status',
+                section: (
+                  <SectionBox title="Status">
+                    <NameValueTable rows={getStatusRows(resource)} />
+                  </SectionBox>
+                ),
+              },
+            ]
+          : []
       }
     />
   );

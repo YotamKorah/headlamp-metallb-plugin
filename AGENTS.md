@@ -11,7 +11,7 @@ The following npm scripts are available for development and testing:
 - **`npm run lint-fix`** - Automatically fix linting issues
 - **`npm run build`** - Build the plugin for production
 - **`npm run tsc`** - Type check code with TypeScript compiler
-- **`CI=1 npm run test`** - Run tests with vitest
+- **`npm run test:ci`** - Run tests with vitest
 - **`npm start`** - Start development server watching for changes
 - **`npm run storybook`** - Start Storybook for component development
 - **`npm run storybook-build`** - Build static Storybook
@@ -102,14 +102,11 @@ Check out production-ready plugins in `node_modules/@kinvolk/headlamp-plugin/off
 
 - **Example:** `details-view` - Shows how to customize resource detail pages
 - **File:** `examples/details-view/src/index.tsx`
-- **This plugin:** `src/components/ipAddressPools/Detail.tsx` renders `DetailsGrid` sections for `spec` and `status` and uses `IPAddressPool.useGet(name, namespace)`.
-- **Route wiring:** detail route is registered in `src/index.tsx` and pinned via `IPAddressPool.detailsRoute` in `src/resources/ipAddressPool.ts`.
 
 #### Creating Custom Tables
 
 - **Example:** `tables` - Demonstrates custom table implementations
 - **File:** `examples/tables/src/index.tsx`
-- **This plugin:** `src/components/ipAddressPools/List.tsx` uses `ResourceListView` with custom `addresses` and `autoAssign` columns and opens YAML create flow from `titleSideActions`.
 
 #### Adding Charts and Visualizations
 
